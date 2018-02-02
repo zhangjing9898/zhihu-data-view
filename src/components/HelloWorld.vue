@@ -1,71 +1,65 @@
 <template>
+  <div class="chart-wrapper">
   <chart :options="option"></chart>
+  </div>
 </template>
 
 <script>
+  import answerQuestionsData from '../data/zhihu-data.answerQuestions.json'
 export default {
   name: 'HelloWorld',
   data () {
     let option = {
-      tooltip : {
-        trigger: 'axis'
+      title: {
+        text: '知乎问题数据分析'
+      },
+      tooltip: {
+        trigger: 'axis',
+        showDelay: 0,
+        axisPointer: {
+          show: true,
+          type: 'cross',
+          lineStyle: {
+            type: 'dashed',
+            width: 1
+          }
+        },
+        zlevel: 1
       },
       legend: {
-        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+        data: [ '回答数-问题数']
       },
       toolbox: {
-        show : true,
-        feature : {
-          mark : {show: true},
-          dataView : {show: true, readOnly: false},
-          magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-          restore : {show: true},
-          saveAsImage : {show: true}
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataZoom: { show: true },
+          dataView: { show: true, readOnly: false },
+          restore: { show: true },
+          saveAsImage: { show: true }
         }
       },
-      calculable : true,
-      xAxis : [
+      xAxis: [
         {
-          type : 'category',
-          boundaryGap : false,
-          data : ['周一','周二','周三','周四','周五','周六','周日']
+          type: 'value',
+          scale: true,
+          min: 0,
+          max: 6
         }
       ],
-      yAxis : [
+      yAxis: [
         {
-          type : 'value'
+          type: 'value',
+          scale: true
         }
       ],
-      series : [
+      series: [
         {
-          name:'邮件营销',
-          type:'line',
-          stack: '总量',
-          data:[120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-          name:'联盟广告',
-          type:'line',
-          stack: '总量',
-          data:[220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-          name:'视频广告',
-          type:'line',
-          stack: '总量',
-          data:[150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-          name:'直接访问',
-          type:'line',
-          stack: '总量',
-          data:[320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-          name:'搜索引擎',
-          type:'line',
-          stack: '总量',
-          data:[820, 932, 901, 934, 1290, 1330, 1320]
+          name: '回答数-问题数',
+          type: 'scatter',
+          large: true,
+          symbolSize: 3,
+          data: answerQuestionsData.map(i => [Math.log10(i._id), Math.log10(i.count)])
         }
       ]
     }
@@ -78,5 +72,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .chart-wrapper{
+    display: flex;
+    justify-content: center
 
+  }
+  .echarts {
+    width: 800px;
+    height: 600px;
+  }
 </style>

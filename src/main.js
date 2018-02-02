@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import 'echarts'
 import ECharts from 'vue-echarts/components/ECharts.vue'
-
+import 'echarts-wordcloud'
 Vue.component('chart',ECharts);
 Vue.config.productionTip = false
 
